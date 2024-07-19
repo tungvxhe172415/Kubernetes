@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qdrant
+spec:
+  selector:
+    matchLabels:
+      app: qdrant
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: qdrant
+    spec:
+      containers:
+      - image: qdrant/qdrant:v1.6.1
+        name: qdrant
+        env:
+        - name: CONFIG_PATH
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        ports:
+        - containerPort: 6333
+        - containerPort: 6334
+        volumeMounts:
+        - name: qdrant-data
+          mountPath: /qdrant_data
+        - name: qdrant-storage
+          mountPath: /qdrant/storage
+        - name: qdrant-snapshots
+          mountPath: /qdrant/snapshots
+        - name: qdrant-config
+          mountPath: /qdrant/config/config.yaml
+      volumes:
+      - name: qdrant-data
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: qdrant-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: qdrant-snapshots
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: qdrant-config
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdrant
+spec:
+  ports:
+  - name: http
+    port: 6333
+    targetPort: 6333
+  - name: grpc
+    port: 6334
+    targetPort: 6334
+  selector:
+    app: qdrant

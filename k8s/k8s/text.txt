@@ -1,0 +1,35 @@
+helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+  --create-namespace \
+  --namespace nfs-provisioner \
+  --set nfs.server=192.168.1.41 \
+  --set nfs.path=/media/bootai/datanfs
+
+
+minio.dev.svc.cluster.local
+minio-headless.dev.svc.cluster.local
+
+
+
+
+ENV=prd
+DB_HOST=db_host_prd
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=XY58JqcxNLmy8SHN
+DB_NAME=viettin_prd
+API_KEY=baae4cf9-9cf2-49d6-90a2-24498b4eb29a
+AI_API_KEY=ygZ2SkZSL8SAzMfDf3WW_KjF6WH-XchYmMbUvsAwSDE
+HOST_RABBIT=rabbitmq
+PORT_RABBIT=5672
+USER_RABBIT=leon
+PASSWORD_RABBIT=dxt
+EXCHANGE_NAME=viettin-direct-exchange
+EXCHANGE_TYPE=direct
+FACEID_QUEUE =viettin-faceid-queue
+FACEID_ROUTING_KEY=viettin-faceid-routing-key
+ADD_FACE_QUEUE=viettin-addface-queue
+ADD_FACE_ROUTING_KEY=viettin-addface-routing-key
+CHECK_QUALITY_QUEUE=viettin-check-quality-queue
+CHECK_QUALITY_ROUTING_KEY=viettin-check-quality-routing-key
+CHECK_QUALITY_BATCH_QUEUE=viettin-check-quality-batch-queue
+`CHECK_QUALITY_BATCH_ROUTING_KEY=viettin-check-quality-batch-routing-key

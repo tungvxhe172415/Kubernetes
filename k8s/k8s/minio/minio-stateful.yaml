@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: dev
+  labels:
+    app: minio
+spec:
+  serviceName: minio
+  replicas: 2
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      - name: minio
+        env:
+        - name: MINIO_ROOT_USER
+          value: "minio"
+        - name: MINIO_ROOT_PASSWORD
+          value: "minio123"
+        image: minio/minio:latest
+        args:
+        - server
+        - http://minio-0.minio-service-headless.dev.svc.cluster.local/data
+        - http://minio-1.minio-service-headless.dev.svc.cluster.local/data
+        ports:
+        - containerPort: 9000
+          hostPort: 9000
+        - containerPort: 9001
+          hostPort: 9001
+        volumeMounts:
+        - name: minio-data
+          mountPath: /data
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - minio
+  volumeClaimTemplates:
+  - metadata:
+      name: minio-data
+    spec:
+      accessModes:
+        - ReadWriteMany
+      storageClassName: nfs-client
+      resources:
+        requests:
+          storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service-headless
+  namespace: dev
+spec:
+  clusterIP: None
+  ports:
+    - port: 9000
+      name: minio
+  selector:
+    app: minio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  namespace: dev
+spec:
+  ports:
+    - name: cluster
+      port: 9000
+      targetPort: 9000
+      protocol: TCP
+    - name: console
+      port: 9001
+      targetPort: 9001
+      protocol: TCP
+  selector:
+    app: minio  

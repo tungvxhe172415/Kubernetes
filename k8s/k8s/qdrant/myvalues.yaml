@@ -1,0 +1,22 @@
+replicaCount: 3
+additionalLabels:
+  app: qdrant
+persistence:
+  accessModes: ["ReadWriteMany"]
+  size: 5Gi
+  storageClassName: nfs-client
+snapshotRestoration:
+  enabled: false
+  pvcName: qdrant-pvc
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        topologyKey: "kubernetes.io/hostname"
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - qdrant

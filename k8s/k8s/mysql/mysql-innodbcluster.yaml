@@ -1,0 +1,32 @@
+apiVersion: mysql.oracle.com/v2
+kind: InnoDBCluster
+metadata:
+  name: mycluster
+  namespace: dev
+  labels:
+    app: myclustersql
+spec:
+  secretName: mysql-secret
+  tlsUseSelfSigned: true
+  instances: 3
+  router:
+    instances: 1
+  datadirVolumeClaimTemplate:
+    storageClassName: nfs-client
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: 5Gi
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - myclustersql

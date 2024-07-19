@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: qdrant-pv-0
+  namespace: dev
+  labels:
+    app: qdrant-pv-0
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: dev
+    name: qdrant-storage-qdrant-0
+  storageClassName: local-storage
+  local:
+    path: "mnt/qdrant-data-storage"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values: ["bootai-desktop"]
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: qdrant-pv-1
+  namespace: dev
+  labels:
+    app: qdrant-pv-1
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: dev
+    name: qdrant-storage-qdrant-1
+  storageClassName: local-storage
+  local:
+    path: "mnt/qdrant-data-storage"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values: ["bootaibase"]

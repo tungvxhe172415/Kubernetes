@@ -1,0 +1,28 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmqcluster
+  labels:
+    app: rabbitmq
+  namespace: dev
+spec:
+  replicas: 3
+  persistence:
+    storageClassName: nfs-client
+    storage: 5Gi
+  secretBackend:
+    type: Secret
+    secretReference:
+      name: rabbitmq-cluster-default-user
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - rabbitmq

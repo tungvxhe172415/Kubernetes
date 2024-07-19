@@ -1,0 +1,55 @@
+ENV=dev
+API_KEY=baae4cf9-9cf2-49d6-90a2-24498b4eb29a
+AI_API_KEY=ygZ2SkZSL8SAzMfDf3WW_KjF6WH-XchYmMbUvsAwSDE
+DB_HOST=118.70.136.195
+DB_PORT=3308
+DB_USERNAME=root
+DB_PASSWORD=XY58JqcxNLmy8SHN
+DB_NAME=viettin_dev
+HOST_RABBIT=118.70.136.195
+PORT_RABBIT=8701
+USER_RABBIT=leon
+PASSWORD_RABBIT=dxt
+EXCHANGE_NAME=viettin-direct-exchange
+EXCHANGE_TYPE=direct
+FACEID_QUEUE =viettin-faceid-queue
+FACEID_ROUTING_KEY=viettin-faceid-routing-key
+ADD_FACE_QUEUE=viettin-addface-queue
+ADD_FACE_ROUTING_KEY=viettin-addface-routing-key
+CHECK_QUALITY_QUEUE=viettin-check-quality-queue
+CHECK_QUALITY_ROUTING_KEY=viettin-check-quality-routing-key
+CHECK_QUALITY_BATCH_QUEUE=viettin-check-quality-batch-queue
+
+"D:\CMake\bin\cmake.exe" ^
+  -G "Visual Studio 17 2022" -A x64 ^
+  -DQt5_DIR:PATH=C:\Qt\5.15.2\msvc2019_64\lib\cmake\Qt5 ^
+  -S D:\D\S -B D:\D\SR
+
+"D:\CMake\bin\cmake.exe" --build D:\D\SR --config Release
+
+
+
+
+INSERT INTO user (id, phone, password_hash, gender, full_name, created_date, modified_date, is_deleted, is_active) VALUES ('sync-432-dfsafds-4234-cong-nguyen', '1231323213', None, '1', 'Nguyễn Công Sỹ 123456', 1715934232, 0, 0, 1)]\n[parameters: (, , , , , , 0, 0, 1)]\n
+
+
+
+velero install --provider aws --bucket velero-backup --secret-file credentials-velero --use-volume-snapshots=false --backup-location-config region=minio,s3ForcePathStyle="true",s3Url=http://minio-headless.dev.svc.cluster.local:9000 --plugins velero/velero-plugin-for-aws:v1.2.1
+
+  
+
+
+C:\Users\SYNC\Downloads\apache-jmeter-5.6.3\apache-jmeter-5.6.3\bin\jmeter -n -t C:\Users\SYNC\Downloads\apache-jmeter-5.6.3\apache-jmeter-5.6.3\bin\Viettin_1000.jmx -l D:\project\boot\viettin\test_performance\1200_threads_200_period\summary.csv -e -o D:\project\boot\viettin\test_performance\1200_threads_200_period
+
+
+
+Environment="KUBELET_EXTRA_ARGS=$KUBELET_EXTRA_ARGS --root-dir=/media/bootai/data-kubelet"
+Environment="KUBELET_EXTRA_ARGS=$KUBELET_EXTRA_ARGS --root-dir=/data/k8s/kubelet"
+
+
+KUBELET_EXTRA_ARGS=--root-dir=/media/bootai/data-kubelet
+
+
+An error occurred: Get "http://minio.velero..svc:9000/velero-backup/backups/cluster-backup/cluster-backup-logs.gz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=minio%2F20240522%2Fminio%2Fs3%2Faws4_request&X-Amz-Date=20240522T164135Z&X-Amz-Expires=600&X-Amz-SignedHeaders=host&X-Amz-Signature=05ae52b7bded052f2458caf0b17b91aa9bb573f5e254abc307a193c7b32819ac": dial tcp: lookup minio.velero.svc on 127.0.0.53:53: no such host
+
+

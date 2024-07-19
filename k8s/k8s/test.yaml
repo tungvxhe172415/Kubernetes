@@ -1,0 +1,47 @@
+curl -v -H "Authorization: baae4cf9-9cf2-49d6-90a2-24498b4eb29a" -F ahead_image=@ahead.png -F left_image=@left.png -F right_image=@right.png -F down_image=@down.png -F top_left_image=@top_left.png -F top_right_image=@top_right.png -F up_image=@up.png -F full_name=testk8s -F gender=0 -F phone=1234567 -F user_id=1234567 -X PUT bootai-desktop-viettin/api/faces/upsert
+
+
+
+
+BytesIO(image.read()
+f"{full_name}_{user_id}/{head_pose.replace('_image', '')}/{str(get_timestamp_now())}_{image.filename}")
+
+
+helm install mysql mysql-operator/mysql-innodbcluster \
+    --set credentials.root.user='root' \
+    --set credentials.root.password='test1234' \
+    --set credentials.root.host='%' \
+    --set serverInstances=3 \
+    --set routerInstances=1 \
+    --set tls.useSelfSigned=true -n mynamespace
+
+
+  mongodb-0.mongodb-headless.dev.svc.cluster.local:27017
+
+
+
+mongodb-0.mongodb-headless.dev.svc.cluster.local:27017
+mongodb-1.mongodb-headless.dev.svc.cluster.local:27017
+mongodb-2.mongodb-headless.dev.svc.cluster.local:27017
+
+mongodb-0.mongodb-headless.dev.svc.cluster.local:27017
+
+
+
+client = pymongo.MongoClient("mongodb://root:viettinbootai@mongodb-headless/admin?replicaSet=rs0&readPreference=primaryPreferred")
+client['viettin_dev'].list_collection_names()
+EbJyuePtbvFdrw7rm0Ej
+
+
+dongnguyen64/viettin-be-rabbitmq:latest
+
+
+mydb = mysql.connector.connect(
+  host="mycluster-instances",
+  user="root",
+  password="test1234",
+  database="viettin_dev"
+)
+
+
+ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIlpHOXVaMjVuZFhsbGJqWTBPbVJqYTNKZmNHRjBYMDFhU2s4NVpUWTBNRWN0VERSRlJIWnVVbXB4YjJkMlN6RnFOQT09IgoJCX0KCX0KfQ

@@ -1,0 +1,9 @@
+mode: distributed
+statefulset:
+  replicaCount: 2
+  drivesPerNode: 2
+persistence:
+  storageClass: nfs-client
+auth:
+  rootUser: minio
+  rootPassword: minio123

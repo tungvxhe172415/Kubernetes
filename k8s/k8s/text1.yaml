@@ -1,0 +1,53 @@
+#!/bin/bash
+sudo apt update
+sudo apt upgrade -y
+
+# intall k8s
+# create folder keyrings
+mkdir /etc/apt/keyrings
+apt-get update
+apt-get install -y apt-transport-https curl
+# add k8s signing key
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# add software repo
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+apt-get update
+
+# install k8s tools
+apt-get install -y kubeadm kubelet kubectl
+apt-mark hold kubeadm kubelet kubectl
+
+sudo swapoff -a
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# add config networking
+cat >>/etc/sysctl.d/kubernetes.conf<<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+# Apply sysctl params without reboot
+sudo sysctl --system
+
+#install containerd
+cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf.conf
+overlay
+br_netfilter
+EOF
+
+sudo sysctl --system
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y containerd.io
+sudo mkdir -p /etc/containerd
+sudo containerd config default | sudo tee /etc/containerd/config.toml
+
+
+systemctl restart containerd
+systemctl enable containerd
+systemctl daemon-reload
